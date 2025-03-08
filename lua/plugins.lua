@@ -173,7 +173,7 @@ return {
             { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
             { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
             {
-              action = [[lua require("lazyvim.util").telescope.config_files()()]],
+              action = "edit ~/.config/nvim/init.lua",
               desc = " Config",
               icon = " ",
               key = "c"
@@ -810,6 +810,52 @@ return {
       "nvim-telescope/telescope.nvim",
       "tpope/vim-fugitive",
       "tpope/vim-rhubarb",
+    },
+  },
+  -- Vim-Dadbod
+  {
+    "tpope/vim-dadbod",
+    lazy = true, -- Load lazily
+    cmd = { "DB", "DBUI", "DBUIToggle", "DBExec" }
+  },
+
+  -- Dadbod UI for better visual experience
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    lazy = true,
+    requires = { "tpope/vim-dadbod" },
+    cmd = { "DBUI", "DBUIToggle" }
+  },
+
+  -- Dadbod Completion for autocompletion in SQL files
+  {
+    "kristijanhusak/vim-dadbod-completion",
+    lazy = true,
+    after = "nvim-cmp", -- Assuming you're using nvim-cmp for autocompletion
+    ft = { "sql" },
+    config = function()
+      require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
+    end
+  },
+
+  {
+   "kdheepak/lazygit.nvim",
+    lazy = true,
+    cmd = {
+        "LazyGit",
+        "LazyGitConfig",
+        "LazyGitCurrentFile",
+        "LazyGitFilter",
+        "LazyGitFilterCurrentFile",
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+        { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
     },
   },
 }
